@@ -1,10 +1,12 @@
 <script setup lang="ts">
 import { RouterView } from 'vue-router'
-import Header from '@/components/Header.vue';
+import Header from '@/components/ui/Header.vue';
+import { Toast } from 'primevue';
 </script>
 
 <template>
-  <div class="app-container app-dark">
+  <div class="app-container">
+    <Toast />
     <Header />
     <main>
       <RouterView />
