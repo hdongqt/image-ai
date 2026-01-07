@@ -181,7 +181,7 @@ watch(isOpenFormAuth, (val, oldVal) => {
                         v-model="password"
                         v-bind="passwordProps"
                         :invalid="!!errors.password"
-                        placeholder="••••••••"
+                        placeholder=""
                         :feedback="!isLogin"
                         toggleMask
                         class="w-full"

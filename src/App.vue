@@ -1,7 +1,11 @@
 <script setup lang="ts">
 import { RouterView } from 'vue-router'
 import Header from '@/components/ui/Header.vue';
-import { Toast } from 'primevue';
+import Toast from 'primevue/toast';
+import { registerToast } from '@/composables/useToast';
+import { useToast } from 'primevue/usetoast';
+
+registerToast(useToast());
 </script>
 
 <template>
