@@ -12,7 +12,7 @@ import AuthForm from '@/components/AuthForm.vue'
 const router = useRouter()
 const authStore = useAuthStore();
 
-const { setOpenFormAuth, logout } = authStore;
+const { setOpenFormAuth, logout, fetchMyProfile } = authStore;
 const { user, isAuthenticated } = storeToRefs(authStore);
 
 const userMenuRef = ref();
@@ -31,9 +31,17 @@ const toggleTheme = () => {
     isDark.value = html.classList.contains('app-dark')
 }
 
-onMounted(() => {
+onMounted(async () => {
     isDark.value = document.documentElement.classList.contains('app-dark')
-})
+    
+    if (isAuthenticated.value && !user.value) {
+        try {
+            await fetchMyProfile()
+        // eslint-disable-next-line no-empty
+        } catch {
+}
+    }
+})  
 
 const navigate = (route: string) => {
     router.push(route)
@@ -96,33 +104,37 @@ const getInitials = (name: string) => {
                 <!-- User Avatar (when authenticated) -->
                 <div v-else class="hidden sm:block">
                     <Avatar 
-                        :label="user ? getInitials(user.username) : 'U'" 
+                        :image="user?.avatarUrl"
+                        :label="!user?.avatarUrl && user ? getInitials(user.displayName || user.username) : 'U'" 
                         class="cursor-pointer bg-gradient-to-br from-emerald-400 to-cyan-400 text-slate-900 font-semibold"
                         shape="circle"
                         @click="toggleUserMenu"
                     />
                     <Popover ref="userMenuRef">
-                        <div class="flex flex-col gap-3 p-4 min-w-[200px]">
+                        <div class="flex flex-col gap-3 min-w-[200px]">
                             <!-- User Info -->
                             <div class="pb-3 border-b border-slate-700">
-                                <p class="font-semibold text-white">{{ user?.username }}</p>
+                                <p class="font-semibold text-white">{{ user?.displayName || user?.username }}</p>
                                 <p class="text-sm text-slate-400">{{ user?.email }}</p>
+                                <p v-if="user?.bio" class="text-xs text-slate-500 mt-1">{{ user.bio }}</p>
                             </div>
                             
                             <!-- Menu Items -->
-                            <button 
+                            <Button 
+                            label="Secondary" severity="secondary" variant="text"
                                 @click="() => { navigate('/profile'); userMenuRef.hide(); }"
-                                class="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-slate-800 transition-colors text-left text-slate-300 hover:text-white">
+                                class="flex items-center justify-start! text-left gap-3 c px-3 py-2 rounded-lg hover:bg-slate-800 transition-colors text-left text-slate-300 hover:text-white">
                                 <i class="pi pi-user"></i>
                                 <span>My Profile</span>
-                            </button>
+                            </Button>
                             
-                            <button 
+                            <Button 
+                                label="Secondary" severity="secondary" variant="text"
                                 @click="handleLogout"
-                                class="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-red-900/20 transition-colors text-left text-red-400 hover:text-red-300">
+                                class="flex items-center justify-start! gap-3 px-3 py-2 rounded-lg hover:bg-red-900/20 transition-colors text-left text-red-400 hover:text-red-300">
                                 <i class="pi pi-sign-out"></i>
                                 <span>Logout</span>
-                            </button>
+                            </Button>
                         </div>
                     </Popover>
                 </div>

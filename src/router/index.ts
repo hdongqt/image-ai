@@ -18,6 +18,11 @@ const router = createRouter({
       name: 'generate',
       component: () => import('../pages/generate/GenerateView.vue'),
     },
+    {
+      path: '/profile',
+      name: 'profile',
+      component: () => import('../pages/profile/ProfileView.vue'),
+    },
   ],
 })
 

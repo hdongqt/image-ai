@@ -1,6 +1,7 @@
 import { ref, computed } from 'vue';
 import { defineStore } from 'pinia';
 import { authApi, type LoginDto, type RegisterDto } from '@/api/auth';
+import { usersApi } from '@/api/users';
 
 export const useAuthStore = defineStore('auth', () => {
     const user = ref<any>(null);
@@ -42,6 +43,17 @@ export const useAuthStore = defineStore('auth', () => {
         }
     };
 
+    const fetchMyProfile = async () => {
+        try {
+            const response = await usersApi.getMyProfile();
+            user.value = response.data;
+            return response.data;
+        } catch (error) {
+            console.error('Failed to fetch user profile:', error);
+            throw error;
+        }
+    };
+
     const logout = () => {
         user.value = null;
         accessToken.value = null;
@@ -59,6 +71,7 @@ export const useAuthStore = defineStore('auth', () => {
         setOpenFormAuth,
         login,
         register,
+        fetchMyProfile,
         logout,
     };
 });
