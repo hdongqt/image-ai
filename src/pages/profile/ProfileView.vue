@@ -6,7 +6,9 @@ import Card from 'primevue/card'
 import Avatar from 'primevue/avatar'
 import Button from 'primevue/button'
 import Skeleton from 'primevue/skeleton'
+import ImageCard from '@/components/ui/ImageCard.vue'
 import { pushToast } from '@/composables/useToast'
+import { toggleImageVisibility } from '@/api/images'
 
 const authStore = useAuthStore()
 const { user } = storeToRefs(authStore)
@@ -139,23 +141,26 @@ const getInitials = (name: string) => {
                 <!-- Generated Images -->
                 <Card class="bg-slate-900/50 border border-slate-800">
                     <template #header>
-                        <div class="px-6 pt-6">
+                        <div class="px-6 pt-6 flex items-center justify-between">
                             <h2 class="text-xl font-semibold text-white flex items-center gap-2">
                                 <i class="pi pi-images text-emerald-400"></i>
                                 Generated Images
-                                <span class="text-sm text-slate-400 font-normal">({{ user?.images?.length || 0 }})</span>
                             </h2>
+                            <Button 
+                                label="View All" 
+                                icon="pi pi-images" 
+                                variant="link"
+                                @click="$router.push('/profile/generations')"
+                            />
                         </div>
                     </template>
                     <template #content>
                         <div v-if="user?.images && user.images.length > 0" class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-                            <div 
+                            <ImageCard 
                                 v-for="image in user.images" 
                                 :key="image.id"
-                                class="aspect-square bg-slate-800 rounded-lg overflow-hidden hover:ring-2 hover:ring-emerald-400 transition-all cursor-pointer"
-                            >
-                                <img :src="image.url" :alt="image.prompt" class="w-full h-full object-cover" />
-                            </div>
+                                :image="image"
+                            />
                         </div>
                         <div v-else class="text-center py-12">
                             <i class="pi pi-image text-6xl text-slate-700 mb-4"></i>

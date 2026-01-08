@@ -83,7 +83,7 @@ const navigateToGenerate = () => {
             <h2 class="text-3xl font-bold mb-2">Community Creations</h2>
             <p class="text-slate-400">See what others are creating with our AI.</p>
           </div>
-          <Button label="View All" variant="text" class="text-emerald-400" />
+          <router-link to="/profile/generations" class="text-emerald-400">View All</router-link>
         </div>
 
         <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
@@ -96,18 +96,6 @@ const navigateToGenerate = () => {
             </div>
           </div>
         </div>
-      </div>
-    </section>
-
-    <!-- CTA Section -->
-    <section class="py-20 px-6 flex flex-col items-center">
-      <div
-        class="max-w-4xl mx-auto bg-gradient-to-br from-emerald-600 to-cyan-600 rounded-3xl p-12 text-center shadow-2xl shadow-emerald-500/20">
-        <h2 class="text-4xl font-bold mb-6">Ready to unleash your creativity?</h2>
-        <p class="text-xl text-white/80 mb-10">Join thousands of creators and start generating unique AI art today.</p>
-        <Button label="Get Started for Free" size="large"
-          class="p-button-rounded bg-white text-emerald-600 hover:bg-slate-100 border-none px-10"
-          @click="navigateToGenerate" />
       </div>
     </section>
 
