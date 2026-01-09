@@ -70,11 +70,11 @@ const navigateToGenerate = () => {
       ></div>
 
       <h1
-        class="bg-linear-to-r from-emerald-400 to-cyan-400 bg-clip-text text-5xl font-bold text-transparent md:text-7xl"
+        class="animate-gradient-text bg-linear-to-r from-emerald-400 via-cyan-400 to-blue-500 bg-clip-text pb-10 text-5xl font-bold text-transparent md:text-7xl"
       >
         Create Magic with AI
       </h1>
-      <p class="max-w-2xl pt-6 text-lg text-slate-400">
+      <p class="max-w-2xl text-lg text-slate-400">
         The most powerful AI image generation tool at your fingertips. Turn your words into
         masterpieces in seconds.
       </p>
@@ -264,6 +264,25 @@ const navigateToGenerate = () => {
 
   100% {
     transform: translateX(-50%);
+  }
+}
+
+.animate-gradient-text {
+  background-size: 200% auto;
+  animation: gradient-text 2s linear infinite;
+}
+
+@keyframes gradient-text {
+  0% {
+    background-position: 0% 50%;
+  }
+
+  50% {
+    background-position: 100% 50%;
+  }
+
+  100% {
+    background-position: 0% 50%;
   }
 }
 </style>
