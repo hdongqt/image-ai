@@ -29,8 +29,12 @@ jobs:
       - name: Run Lint
         run: npm run lint
 
+      - name: Run Tests
+        run: npm run test:unit
+
+  deploy:
     name: Deploy to Fly.io
-    needs: [lint-and-test, build-docker]
+    needs: lint-and-test
     if: github.event_name == 'push' && github.ref == 'refs/heads/develop'
     runs-on: ubuntu-latest
     concurrency: deploy-group
