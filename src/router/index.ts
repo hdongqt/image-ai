@@ -28,6 +28,11 @@ const router = createRouter({
       name: 'my-generations',
       component: () => import('../pages/profile/MyGenerationsView.vue'),
     },
+    {
+      path: '/timeline',
+      name: 'timeline',
+      component: () => import('../pages/timeline/TimelineView.vue'),
+    },
   ],
 })
 

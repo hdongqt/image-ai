@@ -35,3 +35,7 @@ export const toggleImageVisibility = async (id: number) => {
     const response = await apiClient.patch(`/images/${id}/visibility`);
     return response.data;
 };
+export const getTimeline = async (page: number = 1, limit: number = 10) => {
+    const response = await apiClient.get('/images/timeline', { params: { page, limit } });
+    return response.data;
+};

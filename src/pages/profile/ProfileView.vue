@@ -8,7 +8,7 @@ import Button from 'primevue/button'
 import Skeleton from 'primevue/skeleton'
 import ImageCard from '@/components/ui/ImageCard.vue'
 import { pushToast } from '@/composables/useToast'
-import { toggleImageVisibility } from '@/api/images'
+import { formatDate } from '@/utils/format'
 
 const authStore = useAuthStore()
 const { user } = storeToRefs(authStore)
@@ -128,11 +128,11 @@ const getInitials = (name: string) => {
                             </div>
                             <div>
                                 <p class="text-slate-500 text-sm mb-1">Member Since</p>
-                                <p class="text-white">{{ new Date(user?.createdAt || '').toLocaleDateString() }}</p>
+                                <p class="text-white">{{ formatDate(user?.createdAt || '') }}</p>
                             </div>
                             <div>
                                 <p class="text-slate-500 text-sm mb-1">Last Updated</p>
-                                <p class="text-white">{{ new Date(user?.updatedAt || '').toLocaleDateString() }}</p>
+                                <p class="text-white">{{ formatDate(user?.updatedAt || '') }}</p>
                             </div>
                         </div>
                     </template>

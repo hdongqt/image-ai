@@ -1,7 +1,17 @@
 <script setup lang="ts">
 import { useRouter } from 'vue-router'
+import { computed } from 'vue'
 import Button from 'primevue/button'
 import Card from 'primevue/card'
+
+// Import static images
+import imgIstanbul from '@/assets/images/home/grid-istanbul.jpg'
+import imgNewYork from '@/assets/images/home/grid-newyork.jpg'
+import imgNorway from '@/assets/images/home/grid-norway.jpg'
+import imgParis from '@/assets/images/home/grid-paris.jpg'
+import imgRome from '@/assets/images/home/grid-rome.jpg'
+import imgSydney from '@/assets/images/home/grid-sydney.jpg'
+import imgTokyo from '@/assets/images/home/grid-tokyo.jpg'
 
 const router = useRouter()
 
@@ -21,6 +31,26 @@ const features = [
     description: 'Choose from a wide range of styles, from photorealistic to digital art and beyond.',
     icon: 'pi pi-palette'
   }
+]
+
+const logos = [
+  { name: 'ZenTrailMs', icon: 'pi pi-compass' },
+  { name: 'Wavelength', icon: 'pi pi-star' },
+  { name: 'AlphaHex', icon: 'pi pi-sun' },
+  { name: 'Mistranet', icon: 'pi pi-box' },
+  { name: 'BriteMank', icon: 'pi pi-moon' },
+  { name: 'Limerantz', icon: 'pi pi-circle' },
+  { name: 'Streamlinz', icon: 'pi pi-cloud' }
+]
+
+const staticImages = [
+  { id: 1, url: imgIstanbul, title: 'Istanbul' },
+  { id: 2, url: imgNewYork, title: 'New York' },
+  { id: 3, url: imgNorway, title: 'Norway' },
+  { id: 4, url: imgParis, title: 'Paris' },
+  { id: 5, url: imgRome, title: 'Rome' },
+  { id: 6, url: imgSydney, title: 'Sydney' },
+  { id: 7, url: imgTokyo, title: 'Tokyo' },
 ]
 
 const navigateToGenerate = () => {
@@ -47,8 +77,10 @@ const navigateToGenerate = () => {
       <div class="flex gap-4 pt-10">
         <Button label="Start Creating" icon="pi pi-bolt" size="large" @click="navigateToGenerate"
           class="p-button-rounded p-button-success shadow-lg shadow-emerald-500/20" />
-        <Button label="View Gallery" icon="pi pi-images" size="large" variant="outlined"
-          class="p-button-rounded p-button-secondary" />
+        <router-link to="/timeline">
+          <Button label="View Gallery" icon="pi pi-images" size="large" variant="outlined"
+            class="p-button-rounded p-button-secondary" />
+        </router-link>
       </div>
 
 
@@ -73,27 +105,62 @@ const navigateToGenerate = () => {
           </Card>
         </div>
       </div>
+      <div class="marquee-container pt-10 max-w-6xl mx-auto">
+        <div class="marquee-content w-max flex gap-16">
+          <div v-for="logo in logos" :key="logo.name"
+            class="flex items-center gap-3 whitespace-nowrap opacity-70 transition-opacity duration-300 hover:opacity-100">
+            <i :class="[logo.icon, 'text-2xl text-slate-400']"></i>
+            <span class="text-lg font-medium text-slate-400">{{ logo.name }}</span>
+          </div>
+          <div v-for="logo in logos" :key="logo.name + '-clone'"
+            class="flex items-center gap-3 whitespace-nowrap opacity-70 transition-opacity duration-300 hover:opacity-100">
+            <i :class="[logo.icon, 'text-2xl text-slate-400']"></i>
+            <span class="text-lg font-medium text-slate-400">{{ logo.name }}</span>
+          </div>
+        </div>
+      </div>
     </section>
-
     <!-- Gallery Preview -->
     <section class="py-20 px-6 flex flex-col items-center">
-      <div class="max-w-6xl">
+      <div class="max-w-6xl w-full">
         <div class="flex justify-between items-end mb-12">
           <div>
             <h2 class="text-3xl font-bold mb-2">Community Creations</h2>
             <p class="text-slate-400">See what others are creating with our AI.</p>
           </div>
-          <router-link to="/profile/generations" class="text-emerald-400">View All</router-link>
+          <router-link to="/timeline" class="text-emerald-400 hover:underline">View All</router-link>
         </div>
 
-        <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
-          <div v-for="i in 8" :key="i" class="aspect-square rounded-xl overflow-hidden group relative cursor-pointer">
-            <img :src="`https://picsum.photos/seed/${i + 100}/800/800`" alt="Gallery Image"
-              class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" />
-            <div
-              class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
-              <Button icon="pi pi-search" class="p-button-rounded p-button-text text-white" />
-            </div>
+        <!-- Custom Grid Layout -->
+        <div class="grid grid-cols-3 grid-rows-4 gap-4 h-[1200px]">
+          <!-- div1: row 1, col 2-3 -->
+          <div class="row-start-1 row-end-2 col-start-2 col-end-4 rounded-2xl overflow-hidden shadow-xl border border-slate-800">
+            <img :src="staticImages[0]!.url" :alt="staticImages[0]!.title" class="w-full h-full object-cover" />
+          </div>
+
+          <!-- div2: row 2-3, col 2 -->
+          <div class="row-start-2 row-end-4 col-start-2 col-end-3 rounded-2xl overflow-hidden shadow-xl border border-slate-800">
+            <img :src="staticImages[1]!.url" :alt="staticImages[1]!.title" class="w-full h-full object-cover" />
+          </div>
+
+          <!-- div3: row 2-4, col 3 -->
+          <div class="row-start-2 row-end-5 col-start-3 col-end-4 rounded-2xl overflow-hidden shadow-xl border border-slate-800">
+            <img :src="staticImages[2]!.url" :alt="staticImages[2]!.title" class="w-full h-full object-cover" />
+          </div>
+
+          <!-- div4: row 1-2, col 1 -->
+          <div class="row-start-1 row-end-3 col-start-1 col-end-2 rounded-2xl overflow-hidden shadow-xl border border-slate-800">
+            <img :src="staticImages[3]!.url" :alt="staticImages[3]!.title" class="w-full h-full object-cover" />
+          </div>
+
+          <!-- div5: row 3-4, col 1 -->
+          <div class="row-start-3 row-end-5 col-start-1 col-end-2 rounded-2xl overflow-hidden shadow-xl border border-slate-800">
+            <img :src="staticImages[4]!.url" :alt="staticImages[4]!.title" class="w-full h-full object-cover" />
+          </div>
+
+          <!-- div6: row 4, col 2 -->
+          <div class="row-start-4 row-end-5 col-start-2 col-end-3 rounded-2xl overflow-hidden shadow-xl border border-slate-800">
+            <img :src="staticImages[5]!.url" :alt="staticImages[5]!.title" class="w-full h-full object-cover" />
           </div>
         </div>
       </div>
@@ -113,5 +180,24 @@ const navigateToGenerate = () => {
 
 :deep(.p-card-body) {
   padding: 1.5rem;
+}
+
+.marquee-container {
+  width: 100%;
+  mask-image: linear-gradient(to right, transparent, rgb(236, 236, 236) 10%, rgb(255, 255, 255) 90%, transparent);
+}
+
+.marquee-content {
+  animation: scroll 30s linear infinite;
+}
+
+@keyframes scroll {
+  0% {
+    transform: translateX(0);
+  }
+
+  100% {
+    transform: translateX(-50%);
+  }
 }
 </style>
