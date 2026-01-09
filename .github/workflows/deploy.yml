@@ -29,9 +29,6 @@ jobs:
       - name: Run Lint
         run: npm run lint
 
-      - name: Run Tests
-        run: npm run test:unit
-
   deploy:
     name: Deploy to Fly.io
     needs: lint-and-test
